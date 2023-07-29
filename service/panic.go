@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// PanicRecovery Gin panic recovery and send 500 error
 func (config *Config) PanicRecovery(c *gin.Context, recovered interface{}) {
 	if err, ok := recovered.(string); ok {
 		config.Logger.Error(err)

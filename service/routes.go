@@ -28,7 +28,7 @@ func Serve(config *Config) {
 	apiGroup.GET("/ping", func(c *gin.Context) {
 		var msg string
 		if config.Env == "production" {
-			msg = fmt.Sprintf("Pong! I am %s. Version is %s.", config.ServiceName, config.Version)
+			msg = fmt.Sprintf("Pong! The %s Application Version is %s.", config.ServiceName, config.Version)
 		} else {
 			msg = "pong"
 		}

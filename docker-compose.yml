@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5436:5432
+    volumes:
+      - ./vgang/postgres/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: vgang_user
+      POSTGRES_DB: vgang_db
+      POSTGRES_PASSWORD: Cu57wrXTNe43qNY890
