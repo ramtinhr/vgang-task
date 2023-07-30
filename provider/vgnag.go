@@ -153,6 +153,8 @@ func (u *VgangUser) FetchProducts(accessToken string) error {
 			return err
 		}
 
+		logrus.Info("Products added to the db successfully")
+
 		return nil
 	}
 
