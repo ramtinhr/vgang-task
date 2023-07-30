@@ -1,14 +1,15 @@
-package service
+package api
 
 import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
+	"github.com/ramtinhr/vgang-task/service"
 	"github.com/sirupsen/logrus"
 )
 
 // Serve manage all api routes here
-func Serve(config *Config) {
+func Serve(config *service.Config) {
 	mode := gin.ReleaseMode
 	if config.Env == "local" {
 		mode = gin.DebugMode
@@ -22,8 +23,11 @@ func Serve(config *Config) {
 
 	r.Use(gin.CustomRecovery(config.PanicRecovery))
 
+	r.GET("/:hash", UseShortUrl)
+
+	//
 	apiGroup := r.Group(fmt.Sprintf("/api/v%s", config.Version))
-	apiGroup.GET("/products")
+	apiGroup.GET("/products", GetShortUrls)
 
 	apiGroup.GET("/ping", func(c *gin.Context) {
 		var msg string

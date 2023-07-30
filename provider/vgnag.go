@@ -13,6 +13,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/ramtinhr/vgang-task/models"
+	"github.com/ramtinhr/vgang-task/utils"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -31,10 +32,19 @@ type authData struct {
 	RefreshToken string `json:"refreshToken"`
 }
 
-type CatId uint
+type product struct {
+	Id    uint   `json:"id"`
+	Title string `json:"title"`
+}
+
+type prodD struct {
+	Products []product `json:"products"`
+}
+
+type catId uint
 
 var (
-	ClothingCat = CatId(1)
+	ClothingCat = catId(1)
 )
 
 func (u *VgangUser) Login() (*models.Indexer, error) {
@@ -111,11 +121,34 @@ func (u *VgangUser) FetchProducts(accessToken string) error {
 		return nil
 	}
 
+	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}
 
-	logrus.Warn(string(body))
-	return nil
+	var respData prodD
+	if err = json.Unmarshal(body, &respData); err != nil {
+		return err
+	}
+
+	var products []*models.Product
+
+	if resp.StatusCode == http.StatusOK {
+		for _, prod := range respData.Products {
+			products = append(products, &models.Product{
+				ProductID: prod.Id,
+				Hash:      utils.RandomURL(8),
+			})
+		}
+
+		err := models.AddProducts(products)
+		if err != nil {
+			return err
+		}
+
+		return nil
+	}
+
+	return errors.New("something went wrong")
 }

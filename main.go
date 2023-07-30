@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/ramtinhr/vgang-task/api"
 	"github.com/ramtinhr/vgang-task/models"
 	"github.com/ramtinhr/vgang-task/provider"
 	"github.com/ramtinhr/vgang-task/service"
@@ -59,5 +60,5 @@ func main() {
 	vgang.FetchProducts(indexer.AccessToken)
 
 	logrus.Infof("Listening on port %s", config.ServicePort)
-	service.Serve(config)
+	api.Serve(config)
 }
