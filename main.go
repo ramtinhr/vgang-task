@@ -12,6 +12,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 func init() {
@@ -25,7 +26,7 @@ func init() {
 			DSN:                  os.Getenv("DB_CONN"),
 			PreferSimpleProtocol: true,
 		}), &gorm.Config{
-			// Logger: logger.Default.LogMode(logger.Silent),
+			Logger: logger.Default.LogMode(logger.Silent),
 		})
 
 		if err != nil {
