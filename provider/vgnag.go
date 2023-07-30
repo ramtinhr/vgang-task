@@ -47,6 +47,9 @@ var (
 	ClothingCat = catId(1)
 )
 
+
+// Login
+// login to vgang account and create a indexer to use access token to continue the process
 func (u *VgangUser) Login() (*models.Indexer, error) {
 	url := fmt.Sprintf("%s/auth/login/retailer/vgang", os.Getenv("VGANG_API_ENDPOINT"))
 	uuid := uuid.New()
@@ -102,6 +105,9 @@ func (u *VgangUser) Login() (*models.Indexer, error) {
 	return nil, errors.New("something went wrong")
 }
 
+
+// FetchProducts
+// fetch products of specific category and save it with special hash in the database
 func (u *VgangUser) FetchProducts(accessToken string) error {
 	url, err := url.Parse(fmt.Sprintf("%s/retailers/products", os.Getenv("VGANG_API_ENDPOINT")))
 	if err != nil {
