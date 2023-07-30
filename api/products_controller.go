@@ -16,6 +16,7 @@ type prodTransformer struct {
 	ShortUrl string `json:"shortUrl"`
 }
 
+// GetShortUrls fetch products and return short url and product id
 func GetShortUrls(c *gin.Context) {
 	var data []*prodTransformer
 	prods, err := models.FetchProducts()
@@ -40,6 +41,10 @@ func GetShortUrls(c *gin.Context) {
 	})
 }
 
+
+// UserShortUrl
+// Redirect to vgang website but it won't work without authentication
+// You should already logined to the vgang dashboard
 func UseShortUrl(c *gin.Context) {
 	hash := c.Param("hash")
 	if hash != "" {

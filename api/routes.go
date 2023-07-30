@@ -25,7 +25,7 @@ func Serve(config *service.Config) {
 
 	r.GET("/:hash", UseShortUrl)
 
-	//
+	// V1 API GROUP
 	apiGroup := r.Group(fmt.Sprintf("/api/v%s", config.Version))
 	apiGroup.GET("/products", GetShortUrls)
 
