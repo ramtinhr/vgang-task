@@ -8,7 +8,7 @@ import (
 type Indexer struct {
 	ID           uint   `json:"id" gorm:"primaryKey"`
 	Username     string `json:"username" gorm:"unique"`
-	Password     string `json""password"`
+	Password     string `json:"password"`
 	AccessToken  string `json:"access_token"`
 	RefreshToken string `json:"refresh_token"`
 }
